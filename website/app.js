@@ -7,11 +7,10 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 const getData = async(baseURL , key)=>{
     const zipCode = document.querySelector('#zip').value;
-    console.log(zipCode);
     const res = await fetch(baseURL+zipCode+'&appid='+apiKey);
     try {
         const allData = await res.json();
-        console.log(allData);
+        return allData.main.temp;
     } catch (error) {
         console.log(error);
     }
@@ -19,8 +18,9 @@ const getData = async(baseURL , key)=>{
 
 
 
-const postData = async(url , data)=>{
-    const res =    await fetch('/addNewData',{
+const postData = async(temp)=>{
+    const feeling = document.querySelector('#feelings').value;
+    const res = await fetch('/addNewData',{
         method:"POST",
         credentials: 'same-origin',
         headers: {
@@ -32,10 +32,29 @@ const postData = async(url , data)=>{
             userResponse:feeling
         })
     })
+
+    try {
+        const projectData = await res.json();
+        console.log(projectData);
+        return projectData;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const updateUI = async(data)=>{
+    console.log(data);
 }
 
 document.querySelector('#generate').addEventListener('click' , function() {
-    getData(baseURL , apiKey);
+    getData(baseURL , apiKey)
+    .then((data)=>{
+        postData(data)
+    })
+    // .then((projectData)=>{
+    //     updateUI(projectData);
+    // })
 });
 
 

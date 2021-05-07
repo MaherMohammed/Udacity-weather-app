@@ -24,9 +24,8 @@ app.get('/getProjectData',(req,res)=>{
 
 
 app.post('/addNewData' , (req,res)=>{
-    const dataToAdd = req.data;
-    projectData.push(dataToAdd);
-    // res.send
+    projectData = req.body;
+    res.send(projectData);
 })
 
 // Setup Server
