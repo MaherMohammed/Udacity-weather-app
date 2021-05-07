@@ -18,6 +18,17 @@ app.use(cors());
 app.use(express.static('website'));
 
 
+app.get('/getProjectData',(req,res)=>{
+    res.send(projectData);
+})
+
+
+app.post('/addNewData' , (req,res)=>{
+    const dataToAdd = req.data;
+    projectData.push(dataToAdd);
+    // res.send
+})
+
 // Setup Server
 const PORT = 8000;
 app.listen(PORT , ()=>{

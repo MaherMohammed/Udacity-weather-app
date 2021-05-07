@@ -1,5 +1,5 @@
 /* Global Variables */
-const baseURL = 'http://api.openweathermap.org/geo/1.0/zip?zip=';
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 const apiKey = 'e3782a4dd6b0412bda125cbd7b365830';
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -17,6 +17,22 @@ const getData = async(baseURL , key)=>{
     }
 }
 
+
+
+const postData = async(url , data)=>{
+    const res =    await fetch('/addNewData',{
+        method:"POST",
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({
+            date:newDate,
+            temperature:temp,
+            userResponse:feeling
+        })
+    })
+}
 
 document.querySelector('#generate').addEventListener('click' , function() {
     getData(baseURL , apiKey);
