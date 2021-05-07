@@ -35,7 +35,6 @@ const postData = async(temp)=>{
 
     try {
         const projectData = await res.json();
-        console.log(projectData);
         return projectData;
     } catch (error) {
         console.log(error);
@@ -43,8 +42,22 @@ const postData = async(temp)=>{
 }
 
 
-const updateUI = async(data)=>{
-    console.log(data);
+const updateUI = async()=>{
+    const res = await fetch('/getProjectData' ,{
+        method:"GET"
+    });
+
+    try {
+        const data = await res.json();
+        document.querySelector('#date').innerHTML = `Date: ${data.date}`;
+        document.querySelector('#temp').innerHTML = `Temperature: ${data.temperature}`;
+        document.querySelector('#content').innerHTML = `User Feelings: ${data.userResponse}`;
+    } catch (error) {
+        console.log(error);
+    }
+
+    
+
 }
 
 document.querySelector('#generate').addEventListener('click' , function() {
@@ -52,9 +65,9 @@ document.querySelector('#generate').addEventListener('click' , function() {
     .then((data)=>{
         postData(data)
     })
-    // .then((projectData)=>{
-    //     updateUI(projectData);
-    // })
+    .then(()=>{
+        updateUI();
+    })
 });
 
 
